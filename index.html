@@ -1,0 +1,203 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>My File</title>
+</head>
+
+<body>
+    <button type="button" onclick="myFun(this)">Random !</button>
+    <button type="button" onclick="del(this)">Reset !</button>
+    <button type="button" onclick="choie21(this)">2.1 !</button>
+    <button type="button" onclick="choie22(this)">2.2 !</button>
+    <h3 id="demo"></h3>
+    <h3 id="rr"></h3>
+    <h3 id="vv"></h3>
+    <h3 id="aa"></h3>
+    <script>
+        function choie22(button) {
+            fetch(
+                "http://localhost:3306/getooo",
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+
+            ).then(res => res.json())
+                .then(data => {
+                    
+                    console.log(findSum(data))
+                    document.getElementById("vv").innerHTML = "<code>SELECT * FROM `shownum` where num2 </code><br>" + JSON.stringify(st(data));
+
+                })
+            // var data;
+            // var z = (data);
+            function powerset(arr) {
+                var ps = [[]];
+                for (var i = 0; i < arr.length; i++) {
+                    for (var j = 0, len = ps.length; j < len; j++) {
+                        ps.push(ps[j].concat(arr[i]));
+                    }
+                }
+                return ps;
+
+            }
+
+            function sum(arr) {
+                var total = 0;
+                for (var i = 0; i < arr.length; i++)
+                    total += arr[i];
+                return total
+            }
+
+            function findSum(numbers, targetSum = 1000) {
+                var sumSets = [];
+                var numberSets = powerset(numbers);
+                for (var i = 0; i < numberSets.length; i++) {
+                    var numberSet = numberSets[i];
+                    if (sum(numberSet) == targetSum)
+                        sumSets.push(numberSet);
+                }
+                return sumSets;
+            }
+
+            function st(num, t = 1000) {
+                // console.log(num.length);
+                var a = [];
+                    a.push(num);
+                // console.log(a);
+                for (var i = 0; i < num.length; i++) {
+                    for (var j = 0; j < num.length; j++) {
+                        var c = a[0][i];
+                        var d = a[0][j];
+                        var e = c+d;
+                        // console.log(e);
+                        if (e == t && c != d) {
+                            var ok = a[0][i]+"+"+a[0][j];
+                            // console.log(ok);
+                            // break;
+                            return ok;
+                        }
+                    }
+                }
+            }
+            // document.getElementById("vv").innerHTML = JSON.stringify(data);
+
+            // fetch(
+            //     "http://localhost:3306/getoo",
+            //     {
+            //         method: "GET",
+            //         headers: {
+            //             "Content-Type": "application/json"
+            //         }
+            //     }
+            // )
+            //     .then(res => res.json())
+            //     .then(data => {
+
+            //         console.log(data)
+            //         document.getElementById("vv").innerHTML = JSON.stringify(data)
+            //     })
+            // function powerset(arr) {
+            //     var ps = [[]];
+            //     var total = 0;
+            //     var numberSets = powerset(numbers);
+            //     for (var i = 0; i < arr.length; i++) {
+            //         for (var j = 0, len = ps.length; j < len; j++) {
+            //             ps.push(ps[j].concat(arr[i]));
+            //         }
+            //     }
+            //     for (var i = 0; i < arr.length; i++)
+            //         total += arr[i];
+            //     // return ps;
+            //     for (var i = 0; i < numberSets.length; i++) {
+            //         var numberSet = numberSets[i];
+            //         if (sum(numberSet) == targetSum)
+            //             return numberSet;
+            //     }
+
+            // }
+
+            // function sum(arr) {
+            //     var total = 0;
+            //     for (var i = 0; i < arr.length; i++)
+            //         total += arr[i];
+            //     return total
+            // }
+
+            // function findSum(numbers, targetSum) {
+            //     var numberSets = powerset(numbers);
+            //     for (var i = 0; i < numberSets.length; i++) {
+            //         var numberSet = numberSets[i];
+            //         if (sum(numberSet) == targetSum)
+            //             return numberSet;
+            //     }
+            // }
+        }
+        function choie21(button) {
+            fetch(
+                "http://localhost:3306/getLL",
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            )
+
+                .then(res => res.json())
+                .then(data => {
+
+                    console.log(data)
+                    document.getElementById("rr").innerHTML = "<code>SELECT * FROM `shownum` </code><br>" + JSON.stringify(data);
+
+                })
+
+        }
+        function del(button) {
+            fetch(
+                "http://localhost:3306/delete",
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+
+                }
+            );
+
+            document.getElementById("aa").innerHTML = "<code>DELETE FROM`workk`</code><br>";
+            document.getElementById("demo").innerHTML = "<code>INSERT INTO `workk`(`num1`) VALUES (?)</code><br>";
+        }
+
+        function myFun(button) {
+
+            let arr = [];
+            for (let i = 0; i < 10; i++) {
+                let randomNumber = 0;
+                while (randomNumber < 10) {
+                    randomNumber = Math.floor(Math.random() * 100);
+                }
+                arr.push(randomNumber);
+            }
+            console.log("Array ", arr);
+            document.getElementById("demo").innerHTML = "<code>INSERT INTO `workk`(`num1`) VALUES (?)</code><br>" + arr;
+            fetch(
+                "http://localhost:3306/save",
+                {
+                    method: "POST",
+                    body: JSON.stringify(arr),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+
+                }
+            );
+        }
+
+    </script>
+</body>
+
+</html>
